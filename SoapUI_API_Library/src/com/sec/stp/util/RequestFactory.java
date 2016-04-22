@@ -59,10 +59,7 @@ public class RequestFactory {
 	/**************** This line is added for GitHub Test1****************/
 	/**************** This line is added for GitHub Test2****************/
 	/**************** This line is added for GitHub Test3****************/
-	
-	
-
-	
+	/**************** This line is added for GitHub Test4****************/
 	public String getRequestLog() throws Exception{
 		String log = "";
 		log = log+requestParameter+"\r\n";
