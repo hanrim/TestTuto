@@ -56,6 +56,7 @@ public class RequestFactory {
 	
 	public ArrayList <String> resHeadKeys = resHead.headerKeys;
 	public ArrayList <String> resHeadValues = resHead.headerValues;
+	/**************** This line is added for GitHub Test****************/
 
 	
 	public String getRequestLog() throws Exception{
