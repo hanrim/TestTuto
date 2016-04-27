@@ -37,4 +37,12 @@ public class ReqHead {
 			return null;
 		}
 	}
+		
+	public ArrayList<String> getStatus() throws Exception{
+			if(headerKeys != null){
+				return headerKeys;
+			}else{
+				return null;
+			}
+	}
 }
