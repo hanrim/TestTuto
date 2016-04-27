@@ -42,7 +42,7 @@ public class ReqHead {
 			if(headerKeys != null){
 				return headerKeys;
 			}else{
-				return null;
+				return headerValues;
 			}
 	}
 }
