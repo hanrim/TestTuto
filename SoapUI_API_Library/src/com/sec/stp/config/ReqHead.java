@@ -32,6 +32,7 @@ public class ReqHead {
 	public String getRequestHeader(String keyName) throws Exception{
 		if(headerKeys.contains(keyName) == true){
 			int index = headerKeys.indexOf(keyName);
+			System.out.println("alpha bravo charlie");
 			return headerValues.get(index);
 		}else{
 			return null;
