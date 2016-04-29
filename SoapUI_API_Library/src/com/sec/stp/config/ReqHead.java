@@ -33,6 +33,7 @@ public class ReqHead {
 		if(headerKeys.contains(keyName) == true){
 			int index = headerKeys.indexOf(keyName);
 			System.out.println("alpha bravo charlie");
+			System.out.println("Delta Echo Foxtrot");
 			return headerValues.get(index);
 		}else{
 			return null;
