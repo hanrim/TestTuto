@@ -1,0 +1,21 @@
+@startuml
+
+javascript -> WebView : URL 설정:\n functionName,\n callId,\n parameter,\n callbackName
+
+WebView -> TdriveWebViewClient : shouldOverrideUrlLoading(URL)
+
+TdriveWebViewClient -> TdriveWebViewClient : parseWebViewInterfaceUrl
+
+TdriveWebViewClient -> TdriveWebViewClient : invokeFunction
+
+TdriveWebViewClient -> WebViewInterface : getFunction(functionName)
+
+WebViewInterface -> TdriveWebViewClient : WebViewFunction 객체
+
+TdriveWebViewClient -> WebViewFunction : call(WebViewFunctionContext)
+
+WebViewFunction -> WebView : evaluateJavascript, loadUrl:\n functionName,\n callId,\n parameter,\n callbackName
+
+WebView -> javascript : result
+
+@enduml

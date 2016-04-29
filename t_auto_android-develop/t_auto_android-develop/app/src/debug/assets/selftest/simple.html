@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+</head>
+<body>
+<div style="height: 100px;"></div>
+<div>openTab url : <input id="openTabUrl" type="text" value="tab1.html"/></div>
+<button id="openTab">openTab</button>
+</body>
+    <script>
+		$(document).ready(function () {
+		    var invokeAppFunction = function (functionName, callId, parameter, callbackName) {
+			    if (parameter) {
+			        parameter = '/' + parameter;
+			    } else {
+			        parameter = '/';
+			    }
+			    if (callbackName) {
+			        callbackName = '/' + callbackName;
+			    } else {
+			        callbackName = '';
+			    }
+			    var url = 'tdrive://' + functionName + '/' + callId + parameter + callbackName;
+		        console.log(url);
+		        var iFrame = document.createElement('IFRAME');
+		        iFrame.setAttribute('src', url);
+		        document.documentElement.appendChild(iFrame);
+		        iFrame.parentNode.removeChild(iFrame);
+		        iFrame = null;
+		    };
+		    $('#openTabUrl').keyup(function (event) {
+		        if (event.keyCode == 13) {
+		            $('#openTab').click();
+		        }
+		    });
+		    $('#openTab').click(function () {
+		        var url = $('#openTabUrl').val();
+                var img = document.createElement('img');
+                img.src = url;
+                var absUrl = img.src;
+                img.src = null;
+		        var payload = { url: absUrl };
+		        var functionName = 'openTab';
+		        var parameter = encodeURIComponent(JSON.stringify(payload));
+		        var callId = new Date().getTime();
+		        var callbackName = 't$drive$' + callId;
+		        window[callbackName] = function (functionName, callId, result) {
+		            console.log('callId:' + callId);
+		            console.log('functionName:' + functionName);
+		            console.log('callId:' + callId);
+		            console.log('rawResult:' + result);
+		            if (result) {
+		                result = decodeURIComponent(result);
+		            }
+		            console.log('result:' + result);
+		            delete window[callbackName];
+		            if (result) {
+		                result = JSON.parse(result);
+		                if (result.errorCode) {
+		                    console.log('error: ' + result.errorCode + ' :' + result.errorMessage);
+		                    return;
+		                }
+		                console.log('success');
+		            }
+		        };
+		        setTimeout(function () {
+		          var callback = window[callbackName];
+		          if (callback) {
+		              var timeOutResult = {'errorCode': 'TIMEOUT', 'errorMessage': 'timeout!'};
+		              var encodedResult = encodeURIComponent(JSON.stringify(timeOutResult));
+		              callback(functionName, callId, encodedResult);
+		          }
+		        }, 1000);
+		        invokeAppFunction(functionName, callId, parameter, callbackName);
+		    });
+		});
+	</script>
+</html>
